@@ -1,0 +1,36 @@
+version: 1
+
+dn: dc=example,dc=com
+objectClass: organization
+objectClass: dcObject
+objectClass: top
+dc: example
+o: Example Inc.
+
+dn: cn=admin,dc=example,dc=com
+objectClass: organizationalRole
+objectClass: simpleSecurityObject
+cn: admin
+userPassword:: e1NTSEF9UXZxNzVwdnZUVXFFR0UwVWQzdGdkTDVnbkZvcDVtbEY=
+description: LDAP administrator
+
+dn: cn=jim,dc=example,dc=com
+objectClass: organizationalRole
+objectClass: simpleSecurityObject
+cn: jim
+userPassword:: e1NTSEF9UXZxNzVwdnZUVXFFR0UwVWQzdGdkTDVnbkZvcDVtbEY=
+description: User
+
+dn: cn=john,dc=example,dc=com
+objectClass: organizationalRole
+objectClass: simpleSecurityObject
+cn: john
+userPassword:: e1NTSEF9UXZxNzVwdnZUVXFFR0UwVWQzdGdkTDVnbkZvcDVtbEY=
+description: User
+
+dn: cn=jim,dc=example,dc=com
+objectClass: organizationalRole
+objectClass: simpleSecurityObject
+cn: jim
+userPassword:: e1NTSEF9UXZxNzVwdnZUVXFFR0UwVWQzdGdkTDVnbkZvcDVtbEY=
+description: User
