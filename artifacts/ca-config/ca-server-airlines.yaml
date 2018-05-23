@@ -192,9 +192,18 @@ ldap:
       #    converters:
       #       - name: hf.Revoker
       #         value: attr("uid") =~ "revoker*"
-      # converters:
-         # - name:
-           # value:
+      converters:
+          - name: hf.Revoker
+            value: attr("uid") =~ "*admin"
+          - name: hf.IntermediateCA
+            value: attr("uid") =~ "*admin"
+          - name: hf.GenCRL
+            value: attr("uid") =~ "*admin"
+          - name: hf.AffiliationMgr
+            value: attr("uid") =~ "*admin"
+          - name: hf.Registrar.Attributes
+            value: attr("uid") =~ "*admin" ? "*" : ""
+
       # The 'maps' section contains named maps which may be referenced by the 'map'
       # function in the 'converters' section to map LDAP responses to arbitrary values.
       # For example, assume a user has an LDAP attribute named 'member' which has multiple
