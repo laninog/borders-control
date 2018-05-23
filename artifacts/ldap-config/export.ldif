@@ -11,24 +11,24 @@ dn: cn=admin,dc=example,dc=org
 objectClass: organizationalRole
 objectClass: simpleSecurityObject
 cn: admin
-userPassword:: e1NTSEF9T1ZSM21IcjF4dHoveGprQXhoU1JDRUxqYVVJUWNlcjI=
+userPassword:: e1NTSEF9OUo0VkQ0Qy9leWtMRWpwUm5IaGFTTmprdjNlaWtOYUs=
 description: LDAP administrator
 
 dn: ou=airlines,dc=example,dc=org
-objectClass: top
 objectClass: organizationalUnit
+objectClass: top
 ou: airlines
 
 dn: ou=goverment,dc=example,dc=org
-objectClass: top
 objectClass: organizationalUnit
+objectClass: top
 ou: goverment
 
 dn: cn=avianca,ou=airlines,dc=example,dc=org
-objectClass: top
-objectClass: person
-objectClass: organizationalPerson
 objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
 cn: avianca
 sn: avianca
 uid: avuser
@@ -36,10 +36,10 @@ userPassword:: e1NTSEF9cUNTNVEwOWdtcXhYWXM5OXBadnE1QTRxSmtTV0x4dEkwQ2NpREE9P
  Q==
 
 dn: cn=airfrance,ou=airlines,dc=example,dc=org
-objectClass: top
-objectClass: person
-objectClass: organizationalPerson
 objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
 cn: airfrance
 sn: airfrance
 uid: afuser
@@ -47,10 +47,10 @@ userPassword:: e1NTSEF9TWJPcDlLTDJLa3JkSjJZd3BLTnpjaHZPWkJzZ1pQdHFXaW9XWEE9P
  Q==
 
 dn: cn=usa,ou=goverment,dc=example,dc=org
-objectClass: top
-objectClass: person
-objectClass: organizationalPerson
 objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
 cn: usa
 sn: usa
 uid: usauser
@@ -58,13 +58,35 @@ userPassword:: e1NTSEF9TWJPcDlLTDJLa3JkSjJZd3BLTnpjaHZPWkJzZ1pQdHFXaW9XWEE9P
  Q==
 
 dn: cn=spain,ou=goverment,dc=example,dc=org
-objectClass: top
-objectClass: person
-objectClass: organizationalPerson
 objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
 cn: spain
 sn: spain
 uid: spuser
+userPassword:: e1NTSEF9TWJPcDlLTDJLa3JkSjJZd3BLTnpjaHZPWkJzZ1pQdHFXaW9XWEE9P
+ Q==
+
+dn: cn=airadmin,ou=airlines,dc=example,dc=org
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+cn: airadmin
+sn: airadmin
+uid: airadmin
+userPassword:: e1NTSEF9TWJPcDlLTDJLa3JkSjJZd3BLTnpjaHZPWkJzZ1pQdHFXaW9XWEE9P
+ Q==
+
+dn: cn=govadmin,ou=goverment,dc=example,dc=org
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+cn: govadmin
+sn: govadmin
+uid: govadmin
 userPassword:: e1NTSEF9TWJPcDlLTDJLa3JkSjJZd3BLTnpjaHZPWkJzZ1pQdHFXaW9XWEE9P
  Q==
 
