@@ -191,9 +191,9 @@ ldap:
       #    converters:
       #       - name: hf.Revoker
       #         value: attr("uid") =~ "revoker*"
-      converters:
-         - name:
-           value:
+      # converters:
+         # - name:
+           # value:
       # The 'maps' section contains named maps which may be referenced by the 'map'
       # function in the 'converters' section to map LDAP responses to arbitrary values.
       # For example, assume a user has an LDAP attribute named 'member' which has multiple
@@ -213,10 +213,10 @@ ldap:
       # "peer,client,dn3".  This is because the value of 'attr("member")' is
       # "dn1,dn2,dn3", and the call to 'map' with a 2nd argument of
       # "group" replaces "dn1" with "peer" and "dn2" with "client".
-      maps:
-         groups:
-            - name:
-              value:
+      # maps:
+         # groups:
+            # - name:
+              # value:
 
 #############################################################################
 # Affiliations section. Fabric CA server can be bootstrapped with the
