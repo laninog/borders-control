@@ -1,0 +1,12 @@
+
+attributetype ( 1.1.2.1.1 NAME 'regRoles'
+                DESC 'hf.Registrar.Roles'
+                SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
+
+attributetype ( 1.1.2.1.2 NAME 'regDelegateRoles'
+                DESC 'hf.Registrar.DelegateRoles'
+                SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
+
+attributetype ( 1.1.2.1.3 NAME 'regAttributes'
+                DESC 'hf.Registrar.Attributes'
+                SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
