@@ -169,8 +169,9 @@ ldap:
    enabled: true
    # The URL of the LDAP server
    # url: ldap://<adminDN>:<adminPassword>@<host>:<port>/<base>
-   url: ldap://admin:admin@instance-2:389/dc=example,dc=org
+   url: ldap://cn=admin,dc=example,dc=org:admin@instance-2:389/dc=example,dc=org
    userfilter: (uid=%s)
+   groupFilter: (memberUid=%s)
    # TLS configuration for the client connection to the LDAP server
    # tls:
       # certfiles:
