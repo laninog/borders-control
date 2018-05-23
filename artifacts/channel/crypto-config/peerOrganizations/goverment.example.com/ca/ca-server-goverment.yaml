@@ -80,7 +80,7 @@ tls:
 #############################################################################
 ca:
   # Name of this CA
-  name:
+  name: ca-goverment
   # Key file (is only used to import a private key into BCCSP)
   keyfile:
   # Certificate file (default: ca-cert.pem)
@@ -166,15 +166,17 @@ db:
 ldap:
    # Enables or disables the LDAP client (default: false)
    # If this is set to true, the "registry" section is ignored.
-   enabled: false
+   enabled: true
    # The URL of the LDAP server
-   url: ldap://<adminDN>:<adminPassword>@<host>:<port>/<base>
+   # url: ldap://<adminDN>:<adminPassword>@<host>:<port>/<base>
+   url: ldap://admin:admin@instance-2:389/dc=example,dc=org
+   userfilter: (uid=%s)
    # TLS configuration for the client connection to the LDAP server
-   tls:
-      certfiles:
-      client:
-         certfile:
-         keyfile:
+   # tls:
+      # certfiles:
+      # client:
+         # certfile:
+         # keyfile:
    # Attribute related configuration for mapping from LDAP entries to Fabric CA attributes
    attribute:
       # 'names' is an array of strings containing the LDAP attribute names which are
@@ -239,6 +241,11 @@ ldap:
 affiliations:
    goverment:
       - department1
+#   org1:
+#      - department1
+#      - department2
+#   org2:
+#      - department1
 
 #############################################################################
 #  Signing section
@@ -306,7 +313,7 @@ csr:
         O: Hyperledger
         OU: Fabric
    hosts:
-     - 1386a9868f4f
+     - 426c22c92108
      - localhost
    ca:
       expiry: 131400h

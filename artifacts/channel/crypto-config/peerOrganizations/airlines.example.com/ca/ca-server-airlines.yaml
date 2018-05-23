@@ -166,15 +166,17 @@ db:
 ldap:
    # Enables or disables the LDAP client (default: false)
    # If this is set to true, the "registry" section is ignored.
-   enabled: false
+   enabled: true
    # The URL of the LDAP server
-   url: ldap://<adminDN>:<adminPassword>@<host>:<port>/<base>
+   # url: ldap://<adminDN>:<adminPassword>@<host>:<port>/<base>
+   url: ldap://admin:admin@instance-2:389/dc=example,dc=org
+   userfilter: (uid=%s)
    # TLS configuration for the client connection to the LDAP server
-   tls:
-      certfiles:
-      client:
-         certfile:
-         keyfile:
+   # tls:
+      # certfiles:
+      # client:
+         # certfile:
+         # keyfile:
    # Attribute related configuration for mapping from LDAP entries to Fabric CA attributes
    attribute:
       # 'names' is an array of strings containing the LDAP attribute names which are
