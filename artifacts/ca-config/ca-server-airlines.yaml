@@ -182,7 +182,7 @@ ldap:
    attribute:
       # 'names' is an array of strings containing the LDAP attribute names which are
       # requested from the LDAP server for an LDAP identity's entry
-      names: ['uid','member']
+      names: ['uid','description']
       # The 'converters' section is used to convert an LDAP entry to the value of
       # a fabric CA attribute.
       # For example, the following converts an LDAP 'uid' attribute
@@ -201,6 +201,8 @@ ldap:
            value: attr("uid") =~ "(?m).+admin"
          - name: hf.AffiliationMgr
            value: attr("uid") =~ "(?m).+admin"
+         - name: hf.Registrar.Roles
+           value: map(attr("description"), "groups")
 
       # The 'maps' section contains named maps which may be referenced by the 'map'
       # function in the 'converters' section to map LDAP responses to arbitrary values.
@@ -221,10 +223,12 @@ ldap:
       # "peer,client,dn3".  This is because the value of 'attr("member")' is
       # "dn1,dn2,dn3", and the call to 'map' with a 2nd argument of
       # "group" replaces "dn1" with "peer" and "dn2" with "client".
-      # maps:
-         # groups:
-            # - name:
-              # value:
+      maps:
+         groups:
+            - name: dn1
+              value: user
+            - name: dn2
+              value: client
 
 #############################################################################
 # Affiliations section. Fabric CA server can be bootstrapped with the
