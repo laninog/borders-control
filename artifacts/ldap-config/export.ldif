@@ -1,36 +1,70 @@
 version: 1
 
-dn: dc=example,dc=com
+dn: dc=example,dc=org
 objectClass: organization
 objectClass: dcObject
 objectClass: top
 dc: example
 o: Example Inc.
 
-dn: cn=admin,dc=example,dc=com
+dn: cn=admin,dc=example,dc=org
 objectClass: organizationalRole
 objectClass: simpleSecurityObject
 cn: admin
-userPassword:: e1NTSEF9UXZxNzVwdnZUVXFFR0UwVWQzdGdkTDVnbkZvcDVtbEY=
+userPassword:: e1NTSEF9T1ZSM21IcjF4dHoveGprQXhoU1JDRUxqYVVJUWNlcjI=
 description: LDAP administrator
 
-dn: cn=jim,dc=example,dc=com
-objectClass: organizationalRole
-objectClass: simpleSecurityObject
-cn: jim
-userPassword:: e1NTSEF9UXZxNzVwdnZUVXFFR0UwVWQzdGdkTDVnbkZvcDVtbEY=
-description: User
+dn: ou=airlines,dc=example,dc=org
+objectClass: top
+objectClass: organizationalUnit
+ou: airlines
 
-dn: cn=john,dc=example,dc=com
-objectClass: organizationalRole
-objectClass: simpleSecurityObject
-cn: john
-userPassword:: e1NTSEF9UXZxNzVwdnZUVXFFR0UwVWQzdGdkTDVnbkZvcDVtbEY=
-description: User
+dn: ou=goverment,dc=example,dc=org
+objectClass: top
+objectClass: organizationalUnit
+ou: goverment
 
-dn: cn=jim,dc=example,dc=com
-objectClass: organizationalRole
-objectClass: simpleSecurityObject
-cn: jim
-userPassword:: e1NTSEF9UXZxNzVwdnZUVXFFR0UwVWQzdGdkTDVnbkZvcDVtbEY=
-description: User
+dn: cn=avianca,ou=airlines,dc=example,dc=org
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+cn: avianca
+sn: avianca
+uid: avuser
+userPassword:: e1NTSEF9cUNTNVEwOWdtcXhYWXM5OXBadnE1QTRxSmtTV0x4dEkwQ2NpREE9P
+ Q==
+
+dn: cn=airfrance,ou=airlines,dc=example,dc=org
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+cn: airfrance
+sn: airfrance
+uid: afuser
+userPassword:: e1NTSEF9TWJPcDlLTDJLa3JkSjJZd3BLTnpjaHZPWkJzZ1pQdHFXaW9XWEE9P
+ Q==
+
+dn: cn=usa,ou=goverment,dc=example,dc=org
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+cn: usa
+sn: usa
+uid: usauser
+userPassword:: e1NTSEF9TWJPcDlLTDJLa3JkSjJZd3BLTnpjaHZPWkJzZ1pQdHFXaW9XWEE9P
+ Q==
+
+dn: cn=spain,ou=goverment,dc=example,dc=org
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+cn: spain
+sn: spain
+uid: spuser
+userPassword:: e1NTSEF9TWJPcDlLTDJLa3JkSjJZd3BLTnpjaHZPWkJzZ1pQdHFXaW9XWEE9P
+ Q==
+
