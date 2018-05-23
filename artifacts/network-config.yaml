@@ -134,7 +134,7 @@ organizations:
 #
 orderers:
   orderer.example.com:
-    url: grpcs://104.196.143.34:7050
+    url: grpcs://instance-4:7050
 
     # these are standard properties defined by the gRPC library
     # they will be passed in as-is to gRPC client constructor
@@ -152,10 +152,10 @@ orderers:
 peers:
   peer0.goverment.example.com:
     # this URL is used to send endorsement and query requests
-    url: grpcs://104.196.143.34:7051
+    url: grpcs://instance-4:7051
 
     # this URL is used to connect the EventHub and registering event listeners
-    eventUrl: grpcs://104.196.143.34:7053
+    eventUrl: grpcs://instance-4:7053
 
     grpcOptions:
       ssl-target-name-override: peer0.goverment.example.com
@@ -163,8 +163,8 @@ peers:
       path: artifacts/channel/crypto-config/peerOrganizations/goverment.example.com/peers/peer0.goverment.example.com/tls/ca.crt
 
   peer0.airlines.example.com:
-    url: grpcs://104.196.143.34:8051
-    eventUrl: grpcs://104.196.143.34:8053
+    url: grpcs://instance-4:8051
+    eventUrl: grpcs://instance-4:8053
     grpcOptions:
       ssl-target-name-override: peer0.airlines.example.com
     tlsCACerts:
@@ -177,7 +177,7 @@ peers:
 #
 certificateAuthorities:
   ca-goverment:
-    url: https://104.196.143.34:7054
+    url: https://instance-4:7054
     # the properties specified under this object are passed to the 'http' client verbatim when
     # making the request to the Fabric-CA server
     httpOptions:
@@ -194,7 +194,7 @@ certificateAuthorities:
     caName: ca-goverment
 
   ca-airlines:
-    url: https://104.196.143.34:8054
+    url: https://instance-4:8054
     httpOptions:
       verify: false
     tlsCACerts:
