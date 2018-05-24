@@ -201,6 +201,8 @@ ldap:
            value: attr("uid") =~ "(?m).+admin"
          - name: hf.AffiliationMgr
            value: attr("uid") =~ "(?m).+admin"
+         - name: hf.Registrar.Attributes
+           value: "*"
          - name: hf.Registrar.Roles
            value: map(attr("description"), "groups")
 
