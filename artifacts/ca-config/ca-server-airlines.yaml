@@ -205,6 +205,8 @@ ldap:
            value: if(attr("uid") =~ "(?m).+admin", "*", "")
          - name: hf.Registrar.Roles
            value: map(attr("description"), "groups")
+         - name: hf.Registrar.DelegateRoles
+           value: map(attr("description"), "groups")
 
       # The 'maps' section contains named maps which may be referenced by the 'map'
       # function in the 'converters' section to map LDAP responses to arbitrary values.
