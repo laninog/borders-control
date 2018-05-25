@@ -11,82 +11,88 @@ dn: cn=admin,dc=example,dc=org
 objectClass: organizationalRole
 objectClass: simpleSecurityObject
 cn: admin
-userPassword:: e1NTSEF9OUo0VkQ0Qy9leWtMRWpwUm5IaGFTTmprdjNlaWtOYUs=
+userPassword:: e1NTSEF9dnhwS1BETUxpem5UYWJHVzJhS0NZcGdkc2d1bkEyOWc=
 description: LDAP administrator
 
-dn: ou=airlines,dc=example,dc=org
-objectClass: organizationalUnit
+dn: ou=gencrlg,dc=example,dc=org
 objectClass: top
+objectClass: groupOfUniqueNames
+cn: gencrl
+uniqueMember: uid=iberia,ou=airlines,dc=example,dc=org
+uniqueMember: uid=airfrance,ou=airlines,dc=example,dc=org
+uniqueMember: uid=spain,ou=goverment,dc=example,dc=org
+ou: gencrlg
+
+dn: ou=airlines,dc=example,dc=org
+objectClass: top
+objectClass: organizationalUnit
 ou: airlines
 
-dn: ou=goverment,dc=example,dc=org
-objectClass: organizationalUnit
+dn: ou=revokerg,dc=example,dc=org
 objectClass: top
+objectClass: groupOfUniqueNames
+cn: revoker
+uniqueMember: uid=spain,ou=goverment,dc=example,dc=org
+ou: revokerg
+
+dn: ou=goverment,dc=example,dc=org
+objectClass: top
+objectClass: organizationalUnit
 ou: goverment
 
-dn: cn=avianca,ou=airlines,dc=example,dc=org
-objectClass: inetOrgPerson
-objectClass: organizationalPerson
+dn: uid=iberia,ou=airlines,dc=example,dc=org
 objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: shadowAccount
+objectClass: posixAccount
 objectClass: top
-cn: avianca
-sn: avianca
-uid: avuser
-userPassword:: e1NTSEF9cUNTNVEwOWdtcXhYWXM5OXBadnE1QTRxSmtTV0x4dEkwQ2NpREE9P
- Q==
+cn: Iberia Co
+gidNumber: 10000
+homeDirectory: /home/iberia
+sn: Company
+uid: iberia
+uidNumber: 5000
 
-dn: cn=airfrance,ou=airlines,dc=example,dc=org
-objectClass: inetOrgPerson
-objectClass: organizationalPerson
+dn: uid=airfrance,ou=airlines,dc=example,dc=org
 objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: shadowAccount
+objectClass: posixAccount
 objectClass: top
-cn: airfrance
-sn: airfrance
-uid: afuser
-userPassword:: e1NTSEF9TWJPcDlLTDJLa3JkSjJZd3BLTnpjaHZPWkJzZ1pQdHFXaW9XWEE9P
- Q==
+cn: Airfrance Co
+gidNumber: 10001
+homeDirectory: /home/airfrance
+sn: Company
+uid: airfrance
+uidNumber: 5001
 
-dn: cn=usa,ou=goverment,dc=example,dc=org
-objectClass: inetOrgPerson
-objectClass: organizationalPerson
+dn: uid=spain,ou=goverment,dc=example,dc=org
 objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: shadowAccount
+objectClass: posixAccount
 objectClass: top
-cn: usa
-sn: usa
-uid: usauser
-userPassword:: e1NTSEF9TWJPcDlLTDJLa3JkSjJZd3BLTnpjaHZPWkJzZ1pQdHFXaW9XWEE9P
- Q==
+cn: Spain es
+gidNumber: 10002
+homeDirectory: /home/spain
+sn: Spain
+uid: spain
+uidNumber: 5002
 
-dn: cn=spain,ou=goverment,dc=example,dc=org
-objectClass: inetOrgPerson
-objectClass: organizationalPerson
+dn: uid=france,ou=goverment,dc=example,dc=org
 objectClass: person
-objectClass: top
-cn: spain
-sn: spain
-uid: spuser
-userPassword:: e1NTSEF9TWJPcDlLTDJLa3JkSjJZd3BLTnpjaHZPWkJzZ1pQdHFXaW9XWEE9P
- Q==
-
-dn: cn=airadmin,ou=airlines,dc=example,dc=org
-objectClass: inetOrgPerson
 objectClass: organizationalPerson
-objectClass: person
-objectClass: top
-cn: airadmin
-sn: airadmin
-uid: airadmin
-userPassword:: e1NTSEF9TWJPcDlLTDJLa3JkSjJZd3BLTnpjaHZPWkJzZ1pQdHFXaW9XWEE9P
- Q==
-
-dn: cn=govadmin,ou=goverment,dc=example,dc=org
 objectClass: inetOrgPerson
-objectClass: organizationalPerson
-objectClass: person
+objectClass: shadowAccount
+objectClass: posixAccount
 objectClass: top
-cn: govadmin
-sn: govadmin
-uid: govadmin
-userPassword:: e1NTSEF9TWJPcDlLTDJLa3JkSjJZd3BLTnpjaHZPWkJzZ1pQdHFXaW9XWEE9P
- Q==
+cn: France fr
+gidNumber: 10003
+homeDirectory: /home/france
+sn: France
+uid: france
+uidNumber: 5003
 

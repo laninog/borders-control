@@ -192,22 +192,34 @@ ldap:
       #    converters:
       #       - name: hf.Revoker
       #         value: attr("uid") =~ "revoker*"
+      names: ['uid','dn','memberOf']
+      # The 'converters' section is used to convert an LDAP entry to the value of
+      # a fabric CA attribute.
+      # For example, the following converts an LDAP 'uid' attribute
+      # whose value begins with 'revoker' to a fabric CA attribute
+      # named "hf.Revoker" with a value of "true" (because the boolean expression
+      # evaluates to true).
+      #    converters:
+      #       - name: hf.Revoker
+      #         value: attr("uid") =~ "revoker*"
       converters:
          - name: hf.Revoker
-           value: attr("uid") =~ "(?m).+admin"
+           value: attr("memberOf") =~ "(?m).+admins"
          - name: hf.IntermediateCA
-           value: attr("uid") =~ "(?m).+admin"
+           value: attr("memberOf") =~ "(?m).+admins"
          - name: hf.GenCRL
-           value: attr("uid") =~ "(?m).+admin"
+           value: attr("memberOf") =~ "(?m).+admins"
          - name: hf.AffiliationMgr
-           value: attr("uid") =~ "(?m).+admin"
+           value: attr("memberOf") =~ "(?m).+admins"
          - name: hf.Registrar.Attributes
            value: if(attr("uid") =~ "(?m).+admin", "*", "")
          - name: hf.Registrar.Roles
-           value: map(attr("description"), "groups")
+           value: map(attr("memberOf"), "groups")
          - name: hf.Registrar.DelegateRoles
-           value: map(attr("description"), "groups")
-
+           value: map(attr("memberOf"), "groups")
+         - name: hf.Role.Admin
+           value: map(attr("memberOf"), "roles")
+            
       # The 'maps' section contains named maps which may be referenced by the 'map'
       # function in the 'converters' section to map LDAP responses to arbitrary values.
       # For example, assume a user has an LDAP attribute named 'member' which has multiple
@@ -229,10 +241,11 @@ ldap:
       # "group" replaces "dn1" with "peer" and "dn2" with "client".
       maps:
          groups:
-            - name: dn1
-              value: user
-            - name: dn2
-              value: client
+            - name: ou=admins
+              value: peer,orderer,client,user
+         roles:
+            - name: ou=admins
+              value: admin
 
 #############################################################################
 # Affiliations section. Fabric CA server can be bootstrapped with the
