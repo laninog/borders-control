@@ -7,29 +7,22 @@ version: '2'
 
 services:
 
-  ldap.example.com:
-    image: osixia/openldap:1.2.1
-    ports:
-      - "389:389"
-      - "636:636"
-    container_name: ca_ldap
-
   ca.goverment.example.com:
     image: hyperledger/fabric-ca
     environment:
       - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
       - FABRIC_CA_SERVER_CA_NAME=ca-goverment
-      - FABRIC_CA_LOGLEVEL=debug
-      - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.goverment.example.com-cert.pem
-      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/195d22021822384d456d7acfb732b93ae8abb6945af67078abc5eb78d2163c24_sk
       - FABRIC_CA_SERVER_TLS_ENABLED=true
-      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.goverment.example.com-cert.pem
-      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/195d22021822384d456d7acfb732b93ae8abb6945af67078abc5eb78d2163c24_sk
     ports:
       - "7054:7054"
+    # command: sh -c 'fabric-ca-server start -c /etc/hyperledger/fabric-ca-server-config/ca-server-goverment.yaml -b admin:adminpw -d'
     command: sh -c 'fabric-ca-server start 
-                  -c /etc/hyperledger/fabric-ca-server-config/ca-server-goverment.yaml -d'
-                  #-b admin:adminpw -d'
+                  -c /etc/hyperledger/fabric-ca-server-config/ca-server-goverment.yaml
+                  --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.goverment.example.com-cert.pem 
+                  --ca.keyfile /etc/hyperledger/fabric-ca-server-config/195d22021822384d456d7acfb732b93ae8abb6945af67078abc5eb78d2163c24_sk 
+                  --tls.certfile /etc/hyperledger/fabric-ca-server-config/ca.goverment.example.com-cert.pem 
+                  --tls.keyfile /etc/hyperledger/fabric-ca-server-config/195d22021822384d456d7acfb732b93ae8abb6945af67078abc5eb78d2163c24_sk 
+                  -b admin:adminpw -d'
     volumes:
       - ./channel/crypto-config/peerOrganizations/goverment.example.com/ca/:/etc/hyperledger/fabric-ca-server-config
     container_name: ca_peerGoverment
@@ -47,8 +40,8 @@ services:
     ports:
       - "8054:7054"
     command: sh -c 'fabric-ca-server start 
-                    -c /etc/hyperledger/fabric-ca-server-config/ca-server-airlines.yaml -d'
-                    #-b admin:adminpw -d'
+                    -c /etc/hyperledger/fabric-ca-server-config/ca-server-airlines.yaml
+                    -b admin:adminpw -d'
     volumes:
       - ./channel/crypto-config/peerOrganizations/airlines.example.com/ca/:/etc/hyperledger/fabric-ca-server-config
     container_name: ca_peerAirlines
@@ -86,8 +79,6 @@ services:
       - CORE_PEER_ID=peer0.goverment.example.com
       - CORE_PEER_LOCALMSPID=GovermentMSP
       - CORE_PEER_ADDRESS=peer0.goverment.example.com:7051
-      - CORE_LOGGING_LEVEL=DEBUG
-      - CORE_CHAINCODE_LOGGING_LEVEL=DEBUG
     ports:
       - 7051:7051
       - 7053:7053
@@ -134,9 +125,7 @@ services:
     command: /bin/bash
     volumes:
         - /var/run/:/host/var/run/
-        # chaincode map
-        - ./src:/opt/gopath/src
-        - /Users/alejandro/Workspaces/hyperledgerWorkspace/gopath/src/github.com/hyperledger/fabric:/opt/gopath/src/github.com/hyperledger/fabric
+        - ./chaincode/:/opt/gopath/src/github.com/chaincode
         - ./channel/crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
         # - ./scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
         - ./channel:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel

@@ -14,17 +14,20 @@
  *  limitations under the License.
  */
 'use strict';
+
 var log4js = require('log4js');
 var logger = log4js.getLogger('Helper');
 logger.setLevel('DEBUG');
 
 var path = require('path');
 var util = require('util');
-var copService = require('fabric-ca-client');
+var Fabric_CA_Client = require('fabric-ca-client');
 
-var hfc = require('fabric-client');
-hfc.setLogger(logger);
-var ORGS = hfc.getConfigSetting('network-config');
+var fabricClient = require('fabric-client');
+
+fabricClient.setLogger(logger);
+
+var ORGS = fabricClient.getConfigSetting('network-config');
 
 var clients = {};
 var channels = {};
@@ -41,14 +44,14 @@ async function getClientForOrg (userorg, username) {
 
 	// build a client context and load it with a connection profile
 	// lets only load the network settings and save the client for later
-	let client = hfc.loadFromConfig(hfc.getConfigSetting('network'+config));
+	let client = fabricClient.loadFromConfig(fabricClient.getConfigSetting('network'+config));
 
 	// This will load a connection profile over the top of the current one one
 	// since the first one did not have a client section and the following one does
 	// nothing will actually be replaced.
 	// This will also set an admin identity because the organization defined in the
 	// client section has one defined
-	client.loadFromConfig(hfc.getConfigSetting(userorg+config));
+	client.loadFromConfig(fabricClient.getConfigSetting(userorg+config));
 
 	// this will create both the state store and the crypto store based
 	// on the settings in the client section of the connection profile
@@ -71,6 +74,32 @@ async function getClientForOrg (userorg, username) {
 	return client;
 }
 
+var getEnrolledAdmin = async function() {
+	try {
+    var orgClient = await getClientForOrg('Goverment');
+
+    let fcac = new Fabric_CA_Client(
+      'https://localhost:7054',
+      {},
+      orgClient.getCertificateAuthority().caName,
+      orgClient.getCryptoSuite()
+    );
+
+    let aaa = await fcac.enroll({
+      enrollmentID: 'admin',
+      enrollmentSecret: 'adminpw'
+    });
+
+		var admins = fabricClient.getConfigSetting('admins');
+		let adminUserObj = await orgClient.setUserContext({username: admins[0].username, password: admins[0].secret});
+
+		// logger.debug('Successfully got the secret for user %s',username);
+	} catch (error) {
+		logger.error('Failed to get registered user: %s with error: %s', username, error.toString());
+		return 'failed '+error.toString();
+	}
+}
+
 var getRegisteredUser = async function(username, userOrg, isJson) {
 	try {
 		var client = await getClientForOrg(userOrg);
@@ -83,11 +112,12 @@ var getRegisteredUser = async function(username, userOrg, isJson) {
 		} else {
 			// user was not enrolled, so we will need an admin user object to register
 			logger.info('User %s was not enrolled, so we will need an admin user object to register',username);
-			var admins = hfc.getConfigSetting('admins');
+			var admins = fabricClient.getConfigSetting('admins');
 			let adminUserObj = await client.setUserContext({username: admins[0].username, password: admins[0].secret});
 			let caClient = client.getCertificateAuthority();
 			let secret = await caClient.register({
 				enrollmentID: username,
+				role: 'user',
 				affiliation: userOrg.toLowerCase() + '.department1'
 			}, adminUserObj);
 			logger.debug('Successfully got the secret for user %s',username);
@@ -113,9 +143,8 @@ var getRegisteredUser = async function(username, userOrg, isJson) {
 
 };
 
-
 var setupChaincodeDeploy = function() {
-	process.env.GOPATH = path.join(__dirname, hfc.getConfigSetting('CC_SRC_PATH'));
+	process.env.GOPATH = path.join(__dirname, fabricClient.getConfigSetting('CC_SRC_PATH'));
 };
 
 var getLogger = function(moduleName) {
@@ -128,3 +157,4 @@ exports.getClientForOrg = getClientForOrg;
 exports.getLogger = getLogger;
 exports.setupChaincodeDeploy = setupChaincodeDeploy;
 exports.getRegisteredUser = getRegisteredUser;
+exports.getEnrolledAdmin = getEnrolledAdmin;

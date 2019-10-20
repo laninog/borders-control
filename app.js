@@ -17,8 +17,10 @@
 var log4js = require('log4js');
 var logger = log4js.getLogger('SampleWebApp');
 var express = require('express');
+
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
+
 var bodyParser = require('body-parser');
 var http = require('http');
 var util = require('util');
@@ -29,17 +31,17 @@ var bearerToken = require('express-bearer-token');
 var cors = require('cors');
 
 require('./config.js');
-var hfc = require('fabric-client');
+var fabricClient = require('fabric-client');
 
-var helper = require('./app/helper.js');
+var helper = require('./app/helperCustom.js');
 var createChannel = require('./app/create-channel.js');
 var join = require('./app/join-channel.js');
 var install = require('./app/install-chaincode.js');
 var instantiate = require('./app/instantiate-chaincode.js');
 var invoke = require('./app/invoke-transaction.js');
 var query = require('./app/query.js');
-var host = process.env.HOST || hfc.getConfigSetting('host');
-var port = process.env.PORT || hfc.getConfigSetting('port');
+var host = process.env.HOST || fabricClient.getConfigSetting('host');
+var port = process.env.PORT || fabricClient.getConfigSetting('port');
 
 ///////////////////////////////////////////////////////////////////////////////
 //////////////////////////////// SET CONFIGURATONS ////////////////////////////
@@ -115,9 +117,11 @@ function getErrorMessage(field) {
 // Register and enroll user
 app.post('/users', async function(req, res) {
 	var username = req.body.username;
+  var password = req.body.password;
 	var orgName = req.body.orgName;
 	logger.debug('End point : /users');
 	logger.debug('User name : ' + username);
+  logger.debug('Password : ' + password);
 	logger.debug('Org name  : ' + orgName);
 	if (!username) {
 		res.json(getErrorMessage('\'username\''));
@@ -128,11 +132,12 @@ app.post('/users', async function(req, res) {
 		return;
 	}
 	var token = jwt.sign({
-		exp: Math.floor(Date.now() / 1000) + parseInt(hfc.getConfigSetting('jwt_expiretime')),
+		exp: Math.floor(Date.now() / 1000) + parseInt(fabricClient.getConfigSetting('jwt_expiretime')),
 		username: username,
 		orgName: orgName
 	}, app.get('secret'));
-	let response = await helper.getRegisteredUser(username, orgName, true);
+	let response = await helper.getRegisteredUser(username, orgName, true, password);
+	// let response = await helper.getEnrolledAdmin();
 	logger.debug('-- returned from registering the username %s for organization %s',username,orgName);
 	if (response && typeof response !== 'string') {
 		logger.debug('Successfully registered the username %s for organization %s',username,orgName);
@@ -142,8 +147,8 @@ app.post('/users', async function(req, res) {
 		logger.debug('Failed to register the username %s for organization %s with::%s',username,orgName,response);
 		res.json({success: false, message: response});
 	}
-
 });
+
 // Create Channel
 app.post('/channels', async function(req, res) {
 	logger.info('<<<<<<<<<<<<<<<<< C R E A T E  C H A N N E L >>>>>>>>>>>>>>>>>');

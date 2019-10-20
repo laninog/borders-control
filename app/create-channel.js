@@ -58,7 +58,10 @@ var createChannel = async function(channelName, channelConfigPath, username, org
 		} else {
 			logger.error('\n!!!!!!!!! Failed to create the channel \'' + channelName +
 				'\' !!!!!!!!!\n\n');
-			throw new Error('Failed to create the channel \'' + channelName + '\'');
+			// throw new Error('Failed to create the channel \'' + channelName + '\'');
+			return {
+				success: false
+			};
 		}
 	} catch (err) {
 		logger.error('Failed to initialize the channel: ' + err.stack ? err.stack :	err);

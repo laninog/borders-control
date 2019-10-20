@@ -14,6 +14,13 @@ cn: admin
 userPassword:: e1NTSEF9dnhwS1BETUxpem5UYWJHVzJhS0NZcGdkc2d1bkEyOWc=
 description: LDAP administrator
 
+dn: ou=admins,dc=example,dc=org
+objectClass: top
+objectClass: groupOfUniqueNames
+cn: admins
+uniqueMember: uid=govadmin,ou=goverment,dc=example,dc=org
+ou: admins
+
 dn: ou=gencrlg,dc=example,dc=org
 objectClass: top
 objectClass: groupOfUniqueNames
@@ -95,4 +102,18 @@ homeDirectory: /home/france
 sn: France
 uid: france
 uidNumber: 5003
+
+dn: uid=govadmin,ou=goverment,dc=example,dc=org
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: shadowAccount
+objectClass: posixAccount
+objectClass: top
+cn: Gov Admin
+gidNumber: 10004
+homeDirectory: /home/france
+sn: Admin
+uid: govadmin
+uidNumber: 5004
 

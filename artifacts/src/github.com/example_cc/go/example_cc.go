@@ -1,19 +1,3 @@
-/*
-Copyright IBM Corp. 2016 All Rights Reserved.
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-		 http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
-
 package main
 
 
@@ -21,6 +5,7 @@ import (
 	"fmt"
 	"strconv"
 
+    "github.com/hyperledger/fabric/core/chaincode/lib/cid"
 	"github.com/hyperledger/fabric/core/chaincode/shim"
 	pb "github.com/hyperledger/fabric/protos/peer"
 )
@@ -64,16 +49,37 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface) pb.Response  {
 	}
 
 	return shim.Success(nil)
-
-
 }
 
 // Transaction makes payment of X units from A to B
 func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response {
-	logger.Info("########### example_cc0 Invoke ###########")
+	logger.Info("########### example_cc0 Invoke ---------------------- ###########")
 
 	function, args := stub.GetFunctionAndParameters()
-	
+
+	stub.SetEvent("evtsender", []byte("EVENT_INFO"))
+
+    id, err := cid.GetID(stub)
+    if err == nil {
+        logger.Infof("---------------------> ID %s\n", id)
+    } else {
+        logger.Info("---------------------> ID does not exists")
+    }
+
+    err = cid.AssertAttributeValue(stub, "hf.Role.Admin", "true")
+    if err != nil {
+        logger.Info("---------------------> Role.Admin does not exists")
+    } else {
+        logger.Info("---------------------> Role.Admin exists!!")
+    }
+
+    val, ok, err := cid.GetAttributeValue(stub, "hf.Role.Admin")
+    if err != nil {
+        logger.Info("Error attribute\n")
+    } else {
+        logger.Infof("val %s %s\n", val , ok)
+    }
+
 	if function == "delete" {
 		// Deletes an entity from its state
 		return t.delete(stub, args)

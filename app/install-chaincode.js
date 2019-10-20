@@ -87,7 +87,10 @@ var installChaincode = async function(peers, chaincodeName, chaincodePath,
 	} else {
 		let message = util.format('Failed to install due to:%s',error_message);
 		logger.error(message);
-		throw new Error(message);
+		//throw new Error(message);
+		return {
+			success: false
+		};
 	}
 };
 exports.installChaincode = installChaincode;

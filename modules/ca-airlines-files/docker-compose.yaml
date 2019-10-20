@@ -1,0 +1,22 @@
+version: '2'
+
+services:
+
+  ca.airlines.example.com:
+    image: hyperledger/fabric-ca
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-airlines
+      - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.airlines.example.com-cert.pem
+      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/27ba8bbf74f1b0a1dabc3ed54b380e47c60620ba5eb3ac729fb60fb648ed7eaf_sk
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.airlines.example.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/27ba8bbf74f1b0a1dabc3ed54b380e47c60620ba5eb3ac729fb60fb648ed7eaf_sk
+    ports:
+      - "8054:7054"
+    command: sh -c 'fabric-ca-server start 
+                    -c /etc/hyperledger/fabric-ca-server-config/ca-server-airlines.yaml
+                    -b admin:adminpw -d'
+    volumes:
+      - ./crypto-config/peerOrganizations/airlines.example.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca_peerAirlines
